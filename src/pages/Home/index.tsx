@@ -1,124 +1,28 @@
 import React from "react"
 import {
   Container,
-  createStyles,
   Grid,
-  InputBase,
-  makeStyles,
+  InputAdornment,
   Paper,
-  Theme,
   Typography,
-  withStyles,
+  ListItem,
+  Divider,
+  ListItemAvatar,
+  Avatar,
+  ListItemText,
+  List,
+  Button,
 } from "@material-ui/core"
 
-import { grey } from "@material-ui/core/colors"
+import SearchIcon from "@material-ui/icons/SearchOutlined"
+import PersonAddIcon from "@material-ui/icons/PersonAddOutlined"
+
 import { Tweet } from "../../components/Tweet"
 import { SideMenu } from "../../components/SideMenu"
 
-export const useHomeStyles = makeStyles((theme: Theme) => ({
-  wrapper: {
-    height: "100vh",
-  },
-  logo: {
-    margin: "10px 0",
-  },
-  logoIcon: {
-    fontSize: 36,
-  },
-  sideMenuList: {
-    listStyle: "none",
-    padding: 0,
-    margin: 0,
-  },
-  sideMenuListItem: {
-    cursor: "pointer",
-    "&:hover": {
-      "& div": {
-        backgroundColor: "rgb(29, 161, 242, 0.1)",
-        "& h6": {
-          color: theme.palette.primary.main,
-        },
-        "& svg path": {
-          fill: theme.palette.primary.main,
-        },
-      },
-    },
-
-    "& div": {
-      display: "inline-flex",
-      alignItems: "center",
-      padding: "0 25px 0 20px",
-      marginBottom: 10,
-      borderRadius: 30,
-      height: 50,
-      transition: "background-color 0.1s ease-in-out",
-    },
-  },
-  sideMenuListItemLabel: {
-    fontWeight: 700,
-    fontSize: 20,
-    marginLeft: 15,
-  },
-  sideMenuListItemIcon: {
-    fontSize: 28,
-    marginLeft: -5,
-  },
-  tweetsWrapper: {
-    borderRadius: 0,
-    height: "100%",
-    borderBottom: 0,
-    borderTop: 0,
-  },
-  tweetsWrapperHeader: {
-    borderRight: 0,
-    borderLeft: 0,
-    borderTop: 0,
-    padding: 15,
-
-    "& h6": {
-      fontWeight: 800,
-    },
-  },
-  tweet: {
-    cursor: "pointer",
-    paddingTop: 15,
-    paddingLeft: 20,
-
-    "& :hover": {
-      backgroundColor: "rgb(245, 248, 250)",
-    },
-  },
-  tweetAvatar: {
-    width: theme.spacing(5),
-    height: theme.spacing(5),
-  },
-  tweetFooter: {
-    position: "relative",
-    left: -13,
-    display: "flex",
-    justifyContent: "space-between",
-    width: 450,
-  },
-  tweetUserName: {
-    paddingLeft: 10,
-    color: grey[500],
-  },
-  sideMenuTweetButton: {
-    padding: theme.spacing(3.2),
-    marginTop: theme.spacing(2),
-  },
-}))
-
-const SearchTextField = withStyles(() =>
-  createStyles({
-    input: {
-      borderRadius: 30,
-      backgroundColor: "#e6ecf0",
-      height: 45,
-      padding: 0,
-    },
-  })
-)(InputBase)
+import { AddTweetForm } from "../../components/AddTweetForm.tsx"
+import { useHomeStyles } from "./theme"
+import { SearchTextField } from "../../components/SearchTextField"
 
 const Home: React.FC = (): React.ReactElement => {
   const classes = useHomeStyles()
@@ -126,13 +30,17 @@ const Home: React.FC = (): React.ReactElement => {
   return (
     <Container className={classes.wrapper} maxWidth="lg">
       <Grid container spacing={3}>
-        <Grid item xs={3}>
+        <Grid item sm={1} md={3}>
           <SideMenu classes={classes} />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item sm={8} md={6}>
           <Paper className={classes.tweetsWrapper} variant="outlined">
             <Paper className={classes.tweetsWrapperHeader} variant="outlined">
               <Typography variant="h6">Главная</Typography>
+            </Paper>
+            <Paper>
+              <AddTweetForm classes={classes} />
+              <div className={classes.addFormBottomLine} />
             </Paper>
             {[
               ...new Array(6).fill(
@@ -150,8 +58,108 @@ const Home: React.FC = (): React.ReactElement => {
             ]}
           </Paper>
         </Grid>
-        <Grid item xs={3}>
-          <SearchTextField fullWidth placeholder="Поиск по Твиттеру" />
+        <Grid item sm={3} md={3}>
+          <div className={classes.rightSide}>
+            <SearchTextField
+              variant="outlined"
+              placeholder="Поиск по Твиттеру"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }}
+              fullWidth
+            />
+            <Paper className={classes.rightSideBlock}>
+              <Paper className={classes.rightSideBlockHeader}>
+                <b>Актуальне темы</b>
+              </Paper>
+              <List>
+                <ListItem className={classes.rightSideBlockItem}>
+                  <ListItemText
+                    primary="Астана"
+                    secondary={
+                      <Typography component="span" variant="body2">
+                        Твитов: 3 222
+                      </Typography>
+                    }
+                  />
+                </ListItem>
+                <Divider component="li" />
+                <ListItem className={classes.rightSideBlockItem}>
+                  <ListItemText
+                    primary="#COVID-19"
+                    secondary={
+                      <Typography component="span" variant="body2">
+                        Твитов: 3 333
+                      </Typography>
+                    }
+                  />
+                </ListItem>
+                <Divider component="li" />
+                <ListItem className={classes.rightSideBlockItem}>
+                  <ListItemText
+                    primary="#COVID-20"
+                    secondary={
+                      <Typography component="span" variant="body2">
+                        Твитов: 3 777
+                      </Typography>
+                    }
+                  />
+                </ListItem>
+                <Divider component="li" />
+              </List>
+            </Paper>
+            <Paper className={classes.rightSideBlock}>
+              <Paper className={classes.rightSideBlockHeader}>
+                <b>Кого читать</b>
+              </Paper>
+              <List>
+                <ListItem className={classes.rightSideBlockItem}>
+                  <ListItemAvatar>
+                    <Avatar
+                      alt="user"
+                      src="https://sun1.beeline-kz.userapi.com/impg/tMbQLt0wiiLqo7Lk1UAAb62_E6MHm5PAELBeRw/PorBBeBgjcE.jpg?size=100x0&quality=96&crop=108,108,864,864&sign=ed08a8e0548936a863ca8b0944309b60&ava=1"
+                    />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary="#COVID-20"
+                    secondary={
+                      <Typography component="span" variant="body2">
+                        @BLABLALBA
+                      </Typography>
+                    }
+                  />
+                  <Button color="primary">
+                    <PersonAddIcon />
+                  </Button>
+                </ListItem>
+                <Divider component="li" />
+                <ListItem className={classes.rightSideBlockItem}>
+                  <ListItemAvatar>
+                    <Avatar
+                      alt="user"
+                      src="https://sun2.beeline-kz.userapi.com/impf/c836537/v836537795/50d29/Ps-6Aco6sz4.jpg?size=100x0&quality=96&crop=10,0,585,585&sign=4d7b68b4f0918811d5a6b8e083279e52&ava=1"
+                    />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary="#COVID-20"
+                    secondary={
+                      <Typography component="span" variant="body2">
+                        @BLABLALBA
+                      </Typography>
+                    }
+                  />
+                  <Button color="primary">
+                    <PersonAddIcon />
+                  </Button>
+                </ListItem>
+                <Divider component="li" />
+              </List>
+            </Paper>
+          </div>
         </Grid>
       </Grid>
     </Container>
