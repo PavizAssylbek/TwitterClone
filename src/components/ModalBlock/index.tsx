@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogTitle } from "@material-ui/core"
 import { Close } from "@material-ui/icons"
 import { useStylesSignIn } from "../../pages/SignIn"
 
-interface DialogComponentsProps {
+interface ModalBlockProps {
   title: string
   children: React.ReactNode
   classes?: ReturnType<typeof useStylesSignIn>
@@ -12,12 +12,12 @@ interface DialogComponentsProps {
   onClose: () => void
 }
 
-export const ModalBlock: React.FC<DialogComponentsProps> = ({
+export const ModalBlock: React.FC<ModalBlockProps> = ({
   title,
   vissible = false,
   onClose,
   children,
-}: DialogComponentsProps): React.ReactElement | null => {
+}: ModalBlockProps): React.ReactElement | null => {
   if (!vissible) {
     return null
   }
