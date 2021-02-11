@@ -2,12 +2,12 @@ import produce, { Draft } from "immer"
 import { TagsActions, TagsActionsType } from "./actionCreatores"
 import { TagsState, LoadingState } from "./contracts/state"
 
-const initialTweetState: TagsState = {
+const initialTagsState: TagsState = {
   items: [],
   loadingState: LoadingState.NEVER,
 }
 
-export const tweetsReducer = produce(
+export const tagsReducer = produce(
   (draft: Draft<TagsState>, action: TagsActions) => {
     switch (action.type) {
       case TagsActionsType.SET_TAGS:
@@ -28,5 +28,5 @@ export const tweetsReducer = produce(
         break
     }
   },
-  initialTweetState
+  initialTagsState
 )
