@@ -1,3 +1,4 @@
+import { TagsState } from "./tags/contracts/state"
 import { rootReducer } from "./rootReducer"
 import { createStore, compose, applyMiddleware } from "redux"
 import createSagaMiddlewaare from "redux-saga"
@@ -19,6 +20,7 @@ const composeEnhancers =
 
 export interface RootState {
   tweets: TweetsState
+  tags: TagsState
 }
 
 export const store = createStore(

@@ -92,9 +92,9 @@
     }
   ],
   "tags": [
-    { "name": "#HarryPoter" },
-    { "name": "#Gatsby" },
-    { "name": "#Girls" }
+    { "name": "#HarryPoter", "count": 1234 },
+    { "name": "#Gatsby", "count": 12345 },
+    { "name": "#Girls", "count": 12346 }
   ],
   "users": [
     {
