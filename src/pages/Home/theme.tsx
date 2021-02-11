@@ -21,19 +21,21 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
   },
   sideMenuListItem: {
     cursor: "pointer",
-    "&:hover": {
-      "& div": {
-        backgroundColor: "rgb(29, 161, 242, 0.1)",
-        "& h6": {
-          color: theme.palette.primary.main,
-        },
-        "& svg path": {
-          fill: theme.palette.primary.main,
+    "&:not(:first-child)": {
+      "&:hover": {
+        "& div": {
+          backgroundColor: "rgb(29, 161, 242, 0.1)",
+          "& h6": {
+            color: theme.palette.primary.main,
+          },
+          "& svg path": {
+            fill: theme.palette.primary.main,
+          },
         },
       },
     },
-
-    "& div": {
+    "& div, & a": {
+      color: "inherit",
       display: "inline-flex",
       alignItems: "center",
       padding: "0 25px 0 20px",
@@ -59,6 +61,8 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
     borderTop: 0,
   },
   tweetsWrapperHeader: {
+    display: "flex",
+    alignItems: "center",
     borderRight: 0,
     borderLeft: 0,
     borderTop: 0,
@@ -73,6 +77,7 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
     cursor: "pointer",
     paddingTop: 15,
     paddingLeft: 20,
+    alignItems: "flex-start",
 
     "&:hover": {
       backgroundColor: "rgb(245, 248, 250)",
@@ -139,6 +144,10 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
     },
     "&:hover": {
       backgroundColor: "#edf3f6",
+    },
+    "& a": {
+      color: "inherit",
+      textDecoration: "none",
     },
   },
   addForm: {

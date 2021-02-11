@@ -15,5 +15,5 @@ export const selectTagsItems = createSelector(
 export const selectIsTagsLoading = (state: RootState): boolean =>
   selectLoadingState(state) === LoadingState.LOADING
 
-export const selectIsTagssLoaded = (state: RootState): boolean =>
+export const selectIsTagsLoaded = (state: RootState): boolean =>
   selectLoadingState(state) === LoadingState.LOADED

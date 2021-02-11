@@ -92,9 +92,21 @@
     }
   ],
   "tags": [
-    { "name": "#HarryPoter", "count": 1234 },
-    { "name": "#Gatsby", "count": 12345 },
-    { "name": "#Girls", "count": 12346 }
+    {
+      "_id": "5f625faf606bc4fda1e7bf710",
+      "name": "#HarryPoter",
+      "count": 1234
+    },
+    {
+      "_id": "5f625ff606bscs4fda1e7bf7210",
+      "name": "#Gatsby",
+      "count": 12345
+    },
+    {
+      "_id": "5f625ff606bssc4fda1e7bf2710",
+      "name": "#Girls",
+      "count": 12346
+    }
   ],
   "users": [
     {

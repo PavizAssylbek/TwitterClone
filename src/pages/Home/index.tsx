@@ -13,6 +13,7 @@ import {
   List,
   Button,
   CircularProgress,
+  IconButton,
 } from "@material-ui/core"
 
 import SearchIcon from "@material-ui/icons/SearchOutlined"
@@ -30,6 +31,11 @@ import {
   selectIsTweetsLoading,
   selectTweetsItems,
 } from "../../store/ducks/tweets/selectors"
+import { Tags } from "../../components/Tags"
+import { fetchTags } from "../../store/tags/actionCreatores"
+import { Route } from "react-router-dom"
+import ArrowBackIcon from "@material-ui/icons/ArrowBack"
+import { BackButton } from "../../components/BackButton"
 
 const Home: React.FC = (): React.ReactElement => {
   const classes = useHomeStyles()
@@ -39,6 +45,7 @@ const Home: React.FC = (): React.ReactElement => {
 
   React.useEffect(() => {
     dispatch(fetchTweets())
+    dispatch(fetchTags())
   }, [dispatch])
 
   return (
@@ -50,26 +57,35 @@ const Home: React.FC = (): React.ReactElement => {
         <Grid item sm={8} md={6}>
           <Paper className={classes.tweetsWrapper} variant="outlined">
             <Paper className={classes.tweetsWrapperHeader} variant="outlined">
-              <Typography variant="h6">Главная</Typography>
+              <Route path={`/home/:any`}>
+                <BackButton />
+              </Route>
+              <Route path={["/home", "home/search"]} exact>
+                <Typography variant="h6">Твиты</Typography>
+              </Route>
+
+              <Route path={`/home/tweet`}>
+                <Typography variant="h6">Твитнуть</Typography>
+              </Route>
             </Paper>
-            <Paper>
-              <AddTweetForm classes={classes} />
-              <div className={classes.addFormBottomLine} />
-            </Paper>
-            {isLoading ? (
-              <div className={classes.tweetCenter}>
-                <CircularProgress />
-              </div>
-            ) : (
-              tweets.map((tweet) => (
-                <Tweet
-                  key={tweet._id}
-                  classes={classes}
-                  user={tweet.user}
-                  text={tweet.text}
-                />
-              ))
-            )}
+
+            <Route path={["/home", "home/search"]} exact>
+              <Paper>
+                <AddTweetForm classes={classes} />
+                <div className={classes.addFormBottomLine} />
+              </Paper>
+            </Route>
+            <Route path="/home" exact>
+              {isLoading ? (
+                <div className={classes.tweetCenter}>
+                  <CircularProgress />
+                </div>
+              ) : (
+                tweets.map((tweet) => (
+                  <Tweet key={tweet._id} classes={classes} {...tweet} />
+                ))
+              )}
+            </Route>
           </Paper>
         </Grid>
         <Grid item sm={3} md={3}>
@@ -86,46 +102,7 @@ const Home: React.FC = (): React.ReactElement => {
               }}
               fullWidth
             />
-            <Paper className={classes.rightSideBlock}>
-              <Paper className={classes.rightSideBlockHeader}>
-                <b>Актуальне темы</b>
-              </Paper>
-              <List>
-                <ListItem className={classes.rightSideBlockItem}>
-                  <ListItemText
-                    primary="Астана"
-                    secondary={
-                      <Typography component="span" variant="body2">
-                        Твитов: 3 222
-                      </Typography>
-                    }
-                  />
-                </ListItem>
-                <Divider component="li" />
-                <ListItem className={classes.rightSideBlockItem}>
-                  <ListItemText
-                    primary="#COVID-19"
-                    secondary={
-                      <Typography component="span" variant="body2">
-                        Твитов: 3 333
-                      </Typography>
-                    }
-                  />
-                </ListItem>
-                <Divider component="li" />
-                <ListItem className={classes.rightSideBlockItem}>
-                  <ListItemText
-                    primary="#COVID-20"
-                    secondary={
-                      <Typography component="span" variant="body2">
-                        Твитов: 3 777
-                      </Typography>
-                    }
-                  />
-                </ListItem>
-                <Divider component="li" />
-              </List>
-            </Paper>
+            <Tags classes={classes} />
             <Paper className={classes.rightSideBlock}>
               <Paper className={classes.rightSideBlockHeader}>
                 <b>Кого читать</b>
