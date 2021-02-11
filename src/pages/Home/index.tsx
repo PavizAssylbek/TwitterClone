@@ -12,6 +12,7 @@ import {
   ListItemText,
   List,
   Button,
+  CircularProgress,
 } from "@material-ui/core"
 
 import SearchIcon from "@material-ui/icons/SearchOutlined"
@@ -23,9 +24,22 @@ import { SideMenu } from "../../components/SideMenu"
 import { AddTweetForm } from "../../components/AddTweetForm.tsx"
 import { useHomeStyles } from "./theme"
 import { SearchTextField } from "../../components/SearchTextField"
+import { useDispatch, useSelector } from "react-redux"
+import { fetchTweets } from "../../store/ducks/tweets/actionCreatores"
+import {
+  selectIsTweetsLoading,
+  selectTweetsItems,
+} from "../../store/ducks/tweets/selectors"
 
 const Home: React.FC = (): React.ReactElement => {
   const classes = useHomeStyles()
+  const dispatch = useDispatch()
+  const tweets = useSelector(selectTweetsItems)
+  const isLoading = useSelector(selectIsTweetsLoading)
+
+  React.useEffect(() => {
+    dispatch(fetchTweets())
+  }, [dispatch])
 
   return (
     <Container className={classes.wrapper} maxWidth="lg">
@@ -42,20 +56,20 @@ const Home: React.FC = (): React.ReactElement => {
               <AddTweetForm classes={classes} />
               <div className={classes.addFormBottomLine} />
             </Paper>
-            {[
-              ...new Array(6).fill(
+            {isLoading ? (
+              <div className={classes.tweetCenter}>
+                <CircularProgress />
+              </div>
+            ) : (
+              tweets.map((tweet) => (
                 <Tweet
+                  key={tweet._id}
                   classes={classes}
-                  user={{
-                    fullname: "Lololokwa Olololowka",
-                    username: "lollolo",
-                    avatarUrl:
-                      "https://sun2.beeline-kz.userapi.com/impf/c846417/v846417965/3f3af/gyWA6Q2_6UI.jpg?size=200x0&quality=96&crop=0,0,640,640&sign=0ae49e1b49bc68e79be1a14387c5f3ba&ava=1",
-                  }}
-                  text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id tenetur blanditiis cupiditate et quos eos in? Accusantium totam minima, deserunt, odio aspernatur in a distinctio sit iure vitae nam sed?"
+                  user={tweet.user}
+                  text={tweet.text}
                 />
-              ),
-            ]}
+              ))
+            )}
           </Paper>
         </Grid>
         <Grid item sm={3} md={3}>

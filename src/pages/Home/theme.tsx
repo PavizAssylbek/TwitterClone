@@ -78,6 +78,10 @@ export const useHomeStyles = makeStyles((theme: Theme) => ({
       backgroundColor: "rgb(245, 248, 250)",
     },
   },
+  tweetCenter: {
+    marginTop: 50,
+    textAlign: "center",
+  },
   tweetAvatar: {
     width: theme.spacing(6.5),
     height: theme.spacing(6.5),
